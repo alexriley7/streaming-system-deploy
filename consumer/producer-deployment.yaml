@@ -15,7 +15,7 @@ spec:
       containers:
         - name: consumer
           image: ghcr.io/alexriley7/producer:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - containerPort: 8082
           env:
