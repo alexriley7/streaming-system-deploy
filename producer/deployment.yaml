@@ -15,5 +15,8 @@ spec:
       containers:
         - name: producer
           image: myrepo/producer:latest
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
+      imagePullSecrets:
+        - name: ghcr-secret
