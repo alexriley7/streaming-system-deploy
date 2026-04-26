@@ -1,5 +1,5 @@
 resources:
-  - deployment.yaml
+  - producer-deployment.yaml
 
 images:
   - name: myrepo/producer

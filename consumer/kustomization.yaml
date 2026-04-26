@@ -1,5 +1,5 @@
 resources:
-  - deployment.yaml
+  - consumer-deployment.yaml
 
 images:
   - name: myrepo/consumer
