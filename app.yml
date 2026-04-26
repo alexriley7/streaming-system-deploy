@@ -5,7 +5,7 @@ metadata:
   namespace: argocd
 spec:
   source:
-    repoURL: https://github.com/alexriley7/kafka-deploy.git
+    repoURL: https://github.com/alexriley7/streaming-system-deploy.git
     targetRevision: HEAD
     path: .
   destination:
