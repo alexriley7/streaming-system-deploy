@@ -14,9 +14,12 @@ spec:
     spec:
       containers:
         - name: producer
-          image: myrepo/producer:latest
+          image: ghcr.io/alexriley7/producer:latest
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
+          env:
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              value: "kafka:9092"
       imagePullSecrets:
         - name: ghcr-secret
