@@ -20,7 +20,7 @@ spec:
             - containerPort: 8082
           env:
             - name: KAFKA_BOOTSTRAP_SERVERS
-              value: "kafka:9092"
+              value: 172.17.0.1:9092
             - name: GROUP_ID
               value: "consumer-group-1"
       imagePullSecrets:
