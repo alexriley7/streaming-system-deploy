@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: producer
+  namespace: argocd
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/alexriley7/streaming-system-deploy
+    targetRevision: HEAD
+    path: producer   # folder where your YAML lives
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: kafka
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

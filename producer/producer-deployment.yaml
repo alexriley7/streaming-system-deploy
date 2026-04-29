@@ -16,10 +16,15 @@ spec:
         - name: producer
           image: ghcr.io/alexriley7/producer:latest
           imagePullPolicy: Always
-          ports:
-            - containerPort: 8082
+
+          # Added:
+
           env:
             - name: KAFKA_BOOTSTRAP_SERVERS
-              value: 172.17.0.1:9092
+              value: my-cluster-kafka-bootstrap.kafka:9092
+            - name: TOPIC
+              value: input-topic
+
+
       imagePullSecrets:
         - name: ghcr-secret
