@@ -23,6 +23,7 @@ spec:
 
   job:
     jarURI: local:///opt/flink/usrlib/job.jar
+    entryClass: com.example.FlinkTransformationJob   # 👈 ADD THIS
     parallelism: 1
     upgradeMode: stateless
     state: running
