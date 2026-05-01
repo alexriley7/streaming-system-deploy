@@ -6,7 +6,7 @@ metadata:
 spec:
   image: ghcr.io/alexriley7/streaming-system/flink-transformation:278f98bb2d1a2b1a5cd30713d9565e9455c47742
   flinkVersion: v1_18
-  serviceAccount: default
+  serviceAccount: flink-sa
 
   jobManager:
     resource:
