@@ -19,7 +19,7 @@ spec:
       memory: "1024m"
 
   flinkConfiguration:
-    taskmanager.numberOfTaskSlots: "2"
+    taskmanager.numberOfTaskSlots: "3"
 
   job:
     jarURI: local:///opt/flink/usrlib/job.jar
