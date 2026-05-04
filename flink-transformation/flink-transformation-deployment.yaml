@@ -24,7 +24,7 @@ spec:
   job:
     jarURI: local:///opt/flink/usrlib/job.jar
     entryClass: com.example.FlinkTransformationJob   # 👈 ADD THIS
-    parallelism: 1
+    parallelism: 3
     upgradeMode: stateless
     state: running
 
@@ -37,4 +37,4 @@ spec:
               value: my-cluster-kafka-bootstrap.kafka.svc.cluster.local:9092
 
             - name: GROUP_ID
-              value: flink-consumer-v1
+              value: flink-consumer-v2
