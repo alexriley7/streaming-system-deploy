@@ -37,4 +37,4 @@ spec:
               value: my-cluster-kafka-bootstrap.kafka.svc.cluster.local:9092
 
             - name: GROUP_ID
-              value: flink-consumer-v2
+              value: flink-consumer-v1
