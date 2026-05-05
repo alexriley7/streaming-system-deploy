@@ -1,0 +1,40 @@
+apiVersion: flink.apache.org/v1beta1
+kind: FlinkDeployment
+metadata:
+  name: flink-transformation-v1
+  namespace: flink
+spec:
+  image: ghcr.io/alexriley7/streaming-system/flink-transformation:6452fe82512f8b572949c24fcb4a7d756c77990e
+  flinkVersion: v1_18
+  serviceAccount: flink-sa
+
+  jobManager:
+    resource:
+      cpu: 1
+      memory: "1024m"
+
+  taskManager:
+    resource:
+      cpu: 1
+      memory: "1024m"
+
+  flinkConfiguration:
+    taskmanager.numberOfTaskSlots: "3"
+
+  job:
+    jarURI: local:///opt/flink/usrlib/job.jar
+    entryClass: com.example.ShadowFlinkTransformationJob   # 👈 ADD THIS
+    parallelism: 3
+    upgradeMode: stateless
+    state: running
+
+  podTemplate:
+    spec:
+      containers:
+        - name: flink-main-container
+          env:
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              value: my-cluster-kafka-bootstrap.kafka.svc.cluster.local:9092
+
+            - name: GROUP_ID
+              value: flink-consumer-v1
