@@ -11,12 +11,12 @@ spec:
   jobManager:
     resource:
       cpu: "500m"
-      memory: "256Mi"
+      memory: "1024Mi"
 
   taskManager:
     resource:
       cpu: "500m"
-      memory: "256Mi"
+      memory: "1024Mi"
 
   flinkConfiguration:
     taskmanager.numberOfTaskSlots: "3"
