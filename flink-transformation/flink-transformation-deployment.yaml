@@ -38,3 +38,6 @@ spec:
 
             - name: GROUP_ID
               value: flink-consumer-v1
+
+            - name: ENABLE_JOB
+              value: "false"   # switch to "false" to stop producing
