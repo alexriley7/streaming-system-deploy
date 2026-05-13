@@ -40,7 +40,7 @@ spec:
               value: flink-consumer-v1
 
             - name: ENABLE_JOB
-              value: "true"   # switch to "false" to stop producing
+              value: "false"   # switch to "false" to stop producing
 
             - name: OUTPUT_TOPIC
               value: "output-topic-v1"
