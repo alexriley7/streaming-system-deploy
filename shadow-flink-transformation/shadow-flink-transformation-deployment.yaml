@@ -43,4 +43,4 @@ spec:
               value: "true"   #### switch to "false" to stop producing
 
             - name: OUTPUT_TOPIC
-              value: "output-topic-v1"
+              value: "shadow-output-topic"
