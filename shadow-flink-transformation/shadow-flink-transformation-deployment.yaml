@@ -4,7 +4,7 @@ metadata:
   name: flink-transformation-v2
   namespace: flink
 spec:
-  image: ghcr.io/alexriley7/streaming-system/shadow-flink-transformation:fefb1993f5e679a6663fdaebdc7be30762df75f3
+  image: ghcr.io/alexriley7/streaming-system/shadow-flink-transformation:1791f84655e067864da7716b691cdb6baf9fbc29
   flinkVersion: v1_18
   serviceAccount: flink-sa
 
