@@ -4,7 +4,7 @@ metadata:
   name: flink-transformation-v1
   namespace: flink
 spec:
-  image: ghcr.io/alexriley7/streaming-system/flink-transformation:606548ea105ac664e467d3c5a0b5636ff6296546
+  image: ghcr.io/alexriley7/streaming-system/flink-transformation:b94a11b15a74cc99bea72d93421b007605aba041
   flinkVersion: v1_18
   serviceAccount: flink-sa
 
