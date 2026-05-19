@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: consumer
-          image: ghcr.io/alexriley7/streaming-system/consumer:72e77368e17ecdcbd06efd65a7ba8d35064f83a4
+          image: ghcr.io/alexriley7/streaming-system/consumer:d39fbe396a7fb28039fe31efc50c5bd6577d2962
           imagePullPolicy: Always
           ports:
             - containerPort: 8082
