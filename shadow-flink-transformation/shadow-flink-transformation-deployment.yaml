@@ -20,6 +20,10 @@ spec:
 
   flinkConfiguration:
     taskmanager.numberOfTaskSlots: "1"
+    s3.endpoint: http://moto-s3.default.svc.cluster.local:5000
+    s3.path.style.access: "true"
+    s3.access-key: test
+    s3.secret-key: test
 
   job:
     jarURI: local:///opt/flink/usrlib/job.jar
