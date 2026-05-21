@@ -48,17 +48,24 @@ spec:
 
   flinkConfiguration:
 
-    state.backend: hashmap
+    state.checkpoints.dir: s3://flink-checkpoints/checkpoints
 
-    state.checkpoints.dir: file:///tmp/flink/checkpoints
-    state.savepoints.dir: file:///tmp/flink/savepoints
+    state.savepoints.dir: s3://flink-savepoints/savepoints
 
-    execution.checkpointing.interval: 10s
+    s3.endpoint: http://minio.flink.svc.cluster.local:9000
 
-    s3.endpoint: http://moto-s3.default.svc.cluster.local:5000
-    s3.path.style.access: "true"
+    s3.path.style.access: true
 
-    s3.access-key: test
-    s3.secret-key: test
+    s3.access-key: minio
 
-    s3.connection.ssl.enabled: "false"
+    s3.secret-key: minio123
+
+    fs.s3a.endpoint: minio.flink.svc.cluster.local:9000
+
+    fs.s3a.path.style.access: true
+
+    fs.s3a.access.key: minio
+
+    fs.s3a.secret.key: minio123
+
+    fs.s3a.connection.ssl.enabled: false
