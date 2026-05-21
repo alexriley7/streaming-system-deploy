@@ -48,3 +48,20 @@ spec:
 
             - name: OUTPUT_TOPIC
               value: "shadow-output-topic"
+
+  flinkConfiguration:
+
+    state.backend: hashmap
+
+    state.checkpoints.dir: s3://shadow-flink-checkpoints/checkpoints
+    state.savepoints.dir: s3://shadow-flink-savepoints/savepoints
+
+    execution.checkpointing.interval: 10s
+
+    s3.endpoint: http://moto-s3.default.svc.cluster.local:5000
+    s3.path.style.access: "true"
+
+    s3.access-key: test
+    s3.secret-key: test
+
+    s3.connection.ssl.enabled: "false"
