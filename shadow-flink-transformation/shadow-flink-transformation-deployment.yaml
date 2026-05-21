@@ -53,8 +53,8 @@ spec:
 
     state.backend: hashmap
 
-    state.checkpoints.dir: s3://shadow-flink-checkpoints/checkpoints
-    state.savepoints.dir: s3://shadow-flink-savepoints/savepoints
+    state.checkpoints.dir: file:///tmp/shadow-flink/checkpoints
+    state.savepoints.dir: file:///tmp/shadow-flink/savepoints
 
     execution.checkpointing.interval: 10s
 
