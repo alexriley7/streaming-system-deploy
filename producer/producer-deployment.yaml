@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: producer
-          image: ghcr.io/alexriley7/streaming-system/producer:805e2809c6d25bfd20d371eb433fe7168e4a0eb1
+          image: ghcr.io/alexriley7/streaming-system/producer:2f28e191dd7a321597a0cd7d48a0412b206457d1
           imagePullPolicy: Always
 
           # Added:
