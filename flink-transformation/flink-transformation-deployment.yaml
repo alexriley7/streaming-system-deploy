@@ -1,38 +1,89 @@
 apiVersion: flink.apache.org/v1beta1
 kind: FlinkDeployment
+
 metadata:
   name: flink-transformation-v1
   namespace: flink
+
 spec:
+
   image: ghcr.io/alexriley7/streaming-system/flink-transformation:5a4ccea63e038dfe09d855d78c0874b4caf7d044
+
   flinkVersion: v1_18
+
   serviceAccount: flink-sa
+
+  # ==========================================================
+  # JOB MANAGER
+  # ==========================================================
 
   jobManager:
     resource:
       cpu: 0.25
       memory: "1024m"
 
+  # ==========================================================
+  # TASK MANAGER
+  # ==========================================================
+
   taskManager:
     resource:
       cpu: 0.25
       memory: "1024m"
 
+  # ==========================================================
+  # FLINK CONFIGURATION
+  # ==========================================================
+
   flinkConfiguration:
+
     taskmanager.numberOfTaskSlots: "1"
 
+    # --------------------------------------------------------
+    # CHECKPOINTS / SAVEPOINTS
+    # --------------------------------------------------------
+
+    execution.checkpointing.interval: "30s"
+
+    state.checkpoints.dir: file:///data/flink-checkpoints/checkpoints
+
+    state.savepoints.dir: file:///data/flink-checkpoints/savepoints
+
+    # OPTIONAL:
+    # keep checkpoint history
+
+    state.checkpoints.num-retained: "5"
+
+  # ==========================================================
+  # FLINK JOB
+  # ==========================================================
+
   job:
+
     jarURI: local:///opt/flink/usrlib/job.jar
-    entryClass: com.example.FlinkTransformationJob   # 👈 ADD THIS#
+
+    entryClass: com.example.FlinkTransformationJob
+
     parallelism: 1
-    upgradeMode: stateless 
+
+    upgradeMode: stateless
+
     state: running
 
+  # ==========================================================
+  # POD TEMPLATE
+  # ==========================================================
+
   podTemplate:
+
     spec:
+
       containers:
+
         - name: flink-main-container
+
           env:
+
             - name: KAFKA_BOOTSTRAP_SERVERS
               value: my-cluster-kafka-bootstrap.kafka.svc.cluster.local:9092
 
@@ -40,32 +91,27 @@ spec:
               value: flink-consumer-v1
 
             - name: ENABLE_JOB
-              value: "true"   # switch to "false" to stop producing #offsets were set to lasted
+              value: "true"
 
             - name: OUTPUT_TOPIC
               value: "output-topic-v1"
 
+          # --------------------------------------------------
+          # MOUNT CHECKPOINT STORAGE
+          # --------------------------------------------------
 
-  flinkConfiguration:
+          volumeMounts:
 
-    state.checkpoints.dir: s3://flink-checkpoints/checkpoints
+            - name: flink-checkpoints-volume
+              mountPath: /data/flink-checkpoints
 
-    state.savepoints.dir: s3://flink-savepoints/savepoints
+      # ------------------------------------------------------
+      # PVC VOLUME
+      # ------------------------------------------------------
 
-    s3.endpoint: http://minio.flink.svc.cluster.local:9000
+      volumes:
 
-    s3.path.style.access: true
+        - name: flink-checkpoints-volume
 
-    s3.access-key: minio
-
-    s3.secret-key: minio123
-
-    fs.s3a.endpoint: minio.flink.svc.cluster.local:9000
-
-    fs.s3a.path.style.access: true
-
-    fs.s3a.access.key: minio
-
-    fs.s3a.secret.key: minio123
-
-    fs.s3a.connection.ssl.enabled: false
+          persistentVolumeClaim:
+            claimName: flink-checkpoints-pvc
