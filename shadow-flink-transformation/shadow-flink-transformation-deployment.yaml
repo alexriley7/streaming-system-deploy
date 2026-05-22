@@ -1,42 +1,108 @@
 apiVersion: flink.apache.org/v1beta1
 kind: FlinkDeployment
+
 metadata:
   name: flink-transformation-v2
   namespace: flink
+
 spec:
+
   image: ghcr.io/alexriley7/streaming-system/shadow-flink-transformation:ce2813facdc12b9af0447ae5bd535ac5912da5de
+
   flinkVersion: v1_18
+
   serviceAccount: flink-sa
+
+  # ==========================================================
+  # JOB MANAGER
+  # ==========================================================
 
   jobManager:
     resource:
       cpu: 0.25
       memory: "1024m"
 
+  # ==========================================================
+  # TASK MANAGER
+  # ==========================================================
+
   taskManager:
     resource:
       cpu: 0.25
       memory: "1024m"
 
+  # ==========================================================
+  # FLINK CONFIGURATION
+  # ==========================================================
+
   flinkConfiguration:
+
     taskmanager.numberOfTaskSlots: "1"
+
+    # --------------------------------------------------------
+    # STATE BACKEND
+    # --------------------------------------------------------
+
+    state.backend: hashmap
+
+    # --------------------------------------------------------
+    # CHECKPOINTS / SAVEPOINTS
+    # --------------------------------------------------------
+
+    execution.checkpointing.interval: "30s"
+
+    state.checkpoints.dir: file:///data/flink-checkpoints/checkpoints-shadow
+
+    state.savepoints.dir: file:///data/flink-checkpoints/savepoints-shadow
+
+    state.checkpoints.num-retained: "5"
+
+    # --------------------------------------------------------
+    # S3 / MOTO
+    # --------------------------------------------------------
+
     s3.endpoint: http://moto-s3.default.svc.cluster.local:5000
+
     s3.path.style.access: "true"
+
     s3.access-key: test
+
     s3.secret-key: test
 
+    s3.connection.ssl.enabled: "false"
+
+  # ==========================================================
+  # FLINK JOB
+  # ==========================================================
+
   job:
+
     jarURI: local:///opt/flink/usrlib/job.jar
-    entryClass: com.example.ShadowFlinkTransformationJob   # 👈 ADD THIS#
+
+    entryClass: com.example.ShadowFlinkTransformationJob
+
     parallelism: 1
+
     upgradeMode: stateless
+
     state: running
 
+    savepointTriggerNonce: 1
+
+  # ==========================================================
+  # POD TEMPLATE
+  # ==========================================================
+
   podTemplate:
+
     spec:
+
       containers:
+
         - name: flink-main-container
+
           env:
+
             - name: KAFKA_BOOTSTRAP_SERVERS
               value: my-cluster-kafka-bootstrap.kafka.svc.cluster.local:9092
 
@@ -44,24 +110,27 @@ spec:
               value: flink-consumer-v2
 
             - name: ENABLE_JOB
-              value: "true"   #### switch to "false" to stop producing # offsets didn't changed
+              value: "true"
 
             - name: OUTPUT_TOPIC
               value: "shadow-output-topic"
 
-  flinkConfiguration:
+          # --------------------------------------------------
+          # MOUNT CHECKPOINT STORAGE
+          # --------------------------------------------------
 
-    state.backend: hashmap
+          volumeMounts:
 
-    state.checkpoints.dir: file:///tmp/shadow-flink/checkpoints
-    state.savepoints.dir: file:///tmp/shadow-flink/savepoints
+            - name: flink-checkpoints-volume
+              mountPath: /data/flink-checkpoints
 
-    execution.checkpointing.interval: 10s
+      # ------------------------------------------------------
+      # PVC VOLUME
+      # ------------------------------------------------------
 
-    s3.endpoint: http://moto-s3.default.svc.cluster.local:5000
-    s3.path.style.access: "true"
+      volumes:
 
-    s3.access-key: test
-    s3.secret-key: test
+        - name: flink-checkpoints-volume
 
-    s3.connection.ssl.enabled: "false"
+          persistentVolumeClaim:
+            claimName: flink-checkpoints-pvc
