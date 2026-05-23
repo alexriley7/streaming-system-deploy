@@ -17,14 +17,14 @@ spec:
           image: ghcr.io/alexriley7/streaming-system/producer:b9d72eeaf92b82fc918262092b966044c4dc56f0
           imagePullPolicy: Always
 
-          # Added:
+          # Added: 
 
           env:
             - name: KAFKA_BOOTSTRAP_SERVERS
               value: my-cluster-kafka-bootstrap.kafka.svc.cluster.local:9092
 
             - name: ENABLE_PRODUCER
-              value: "true"   # switch to "false" to stop producing
+              value: "false"   # switch to "false" to stop producing
 
             - name: TOPIC
               value: input-topic
