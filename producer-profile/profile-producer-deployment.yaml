@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: profile-producer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: profile-producer
+  template:
+    metadata:
+      labels:
+        app: profile-producer
+    spec:
+      containers:
+        - name: profile-producer
+          image: ghcr.io/alexriley7/streaming-system/profile-producer:latest
+          imagePullPolicy: Always
+
+          # Added: 
+
+          env:
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              value: my-cluster-kafka-bootstrap.kafka.svc.cluster.local:9092
+
+            - name: ENABLE_PRODUCER
+              value: "false"   # switch to "false" to stop producing
+
+            - name: TOPIC
+              value: profile-input-topic
+
+
+      imagePullSecrets:
+        - name: ghcr-secret
