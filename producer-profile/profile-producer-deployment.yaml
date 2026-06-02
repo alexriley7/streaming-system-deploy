@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: profile-producer
+  name: producer-profile
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: profile-producer
+      app: producer-profile
   template:
     metadata:
       labels:
-        app: profile-producer
+        app: producer-profile
     spec:
       containers:
         - name: profile-producer
-          image: ghcr.io/alexriley7/streaming-system/profile-producer:latest
+          image: ghcr.io/alexriley7/streaming-system/producer-profile:latest
           imagePullPolicy: Always
 
           # Added: 
