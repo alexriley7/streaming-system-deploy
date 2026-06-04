@@ -27,7 +27,7 @@ spec:
               value: "false"   # switch to "false" to stop producing
 
             - name: TOPIC
-              value: profile-input-topic
+              value: profiles-input-topic-1
 
 
       imagePullSecrets:
