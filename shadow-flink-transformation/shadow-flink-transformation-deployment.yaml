@@ -113,7 +113,7 @@ spec:
               value: "true"
 
             - name: OUTPUT_TOPIC
-              value: "shadow-output-topic"
+              value: "shadow-output-topic-debug"
 
           # --------------------------------------------------
           # MOUNT CHECKPOINT STORAGE
