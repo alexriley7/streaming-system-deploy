@@ -1,0 +1,32 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: replay-job
+  namespace: kafka
+
+spec:
+  backoffLimit: 0
+
+  template:
+    metadata:
+      labels:
+        app: replay-job
+
+    spec:
+      restartPolicy: Never
+
+      containers:
+      - name: replay
+
+        image: reprocess-producer:latest
+        imagePullPolicy: Never
+
+        env:
+        - name: BOOTSTRAP_SERVERS
+          value: my-cluster-kafka-bootstrap.kafka.svc.cluster.local:9092
+
+        - name: S3_ENDPOINT
+          value: http://moto-s3.default.svc.cluster.local:5000
+
+        - name: S3_BUCKET
+          value: events

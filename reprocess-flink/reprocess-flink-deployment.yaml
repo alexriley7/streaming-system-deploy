@@ -1,0 +1,31 @@
+apiVersion: flink.apache.org/v1beta1
+kind: FlinkDeployment
+
+metadata:
+  name: reprocess-flink
+  namespace: flink
+
+spec:
+  image: reprocess-flink-job:latest
+  imagePullPolicy: Never
+  flinkVersion: v1_20
+  serviceAccount: flink
+
+  flinkConfiguration:
+    jobmanager.memory.process.size: "1024m"
+    taskmanager.memory.process.size: "1024m"
+
+  jobManager:
+    resource:
+      cpu: 0.1
+      memory: "1024m"
+
+  taskManager:
+    resource:
+      cpu: 0.1
+      memory: "1024m"
+
+  job:
+    jarURI: local:///opt/flink/usrlib/reprocess-flink-job.jar
+    parallelism: 1
+    upgradeMode: stateless
