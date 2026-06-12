@@ -27,7 +27,7 @@ spec:
               value: "false"   # switch to "false" to stop producing
 
             - name: TOPIC
-              value: input-topic-debug-a2
+              value: input-topic-debug-a3
 
 
       imagePullSecrets:
