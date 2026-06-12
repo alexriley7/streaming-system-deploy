@@ -51,9 +51,9 @@ spec:
 
     execution.checkpointing.interval: "30s"
 
-    state.checkpoints.dir: file:///data/flink-checkpoints/checkpoints-shadow/debug/a3
+    state.checkpoints.dir: file:///data/flink-checkpoints/checkpoints-shadow/debug/a4
 
-    state.savepoints.dir: file:///data/flink-checkpoints/savepoints-shadow/debug/a3
+    state.savepoints.dir: file:///data/flink-checkpoints/savepoints-shadow/debug/a4
 
     state.checkpoints.num-retained: "5"
 
@@ -107,13 +107,13 @@ spec:
               value: my-cluster-kafka-bootstrap.kafka.svc.cluster.local:9092
 
             - name: GROUP_ID
-              value: shadow-flink-debug-a3-v1
+              value: shadow-flink-debug-a4-v1
 
             - name: ENABLE_JOB
               value: "true"
 
             - name: OUTPUT_TOPIC
-              value: "shadow-output-topic-debug-a3"
+              value: "shadow-output-topic-debug-a4"
 
           # --------------------------------------------------
           # MOUNT CHECKPOINT STORAGE
