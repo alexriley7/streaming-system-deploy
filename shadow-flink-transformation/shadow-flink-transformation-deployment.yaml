@@ -51,9 +51,9 @@ spec:
 
     execution.checkpointing.interval: "30s"
 
-    state.checkpoints.dir: file:///data/flink-checkpoints/checkpoints-shadow/debug/a1
+    state.checkpoints.dir: file:///data/flink-checkpoints/checkpoints-shadow/debug/a3
 
-    state.savepoints.dir: file:///data/flink-checkpoints/savepoints-shadow/debug/a1
+    state.savepoints.dir: file:///data/flink-checkpoints/savepoints-shadow/debug/a3
 
     state.checkpoints.num-retained: "5"
 
