@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: replay-job
+  name: replay-job-a4
   namespace: kafka
 
 spec:
@@ -10,7 +10,7 @@ spec:
   template:
     metadata:
       labels:
-        app: replay-job
+        app: replay-job-a4
 
     spec:
       restartPolicy: Never
@@ -18,7 +18,7 @@ spec:
       containers:
       - name: replay
 
-        image: reprocess-producer:latest
+        image: reprocess-producer:2.0.0
         imagePullPolicy: Never
 
         env:

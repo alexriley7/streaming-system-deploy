@@ -13,6 +13,8 @@ spec:
 
   serviceAccount: flink-sa
 
+
+
   # ==========================================================
   # JOB MANAGER
   # ==========================================================
@@ -51,11 +53,19 @@ spec:
 
     execution.checkpointing.interval: "30s"
 
-    state.checkpoints.dir: file:///data/flink-checkpoints/checkpoints-shadow/debug/a4
+    state.checkpoints.dir: file:///data/flink-checkpoints/checkpoints-debug-v2
 
-    state.savepoints.dir: file:///data/flink-checkpoints/savepoints-shadow/debug/a4
+    state.savepoints.dir: file:///data/flink-savepoints/savepoints-debug-v2
 
     state.checkpoints.num-retained: "5"
+
+
+
+    taskmanager.numberOfTaskSlots: "1"
+
+    metrics.reporter.prom.factory.class: org.apache.flink.metrics.prometheus.PrometheusReporterFactory
+
+    metrics.reporter.prom.port: "9249"
 
     # --------------------------------------------------------
     # S3 / MOTO
@@ -97,6 +107,11 @@ spec:
 
     spec:
 
+
+      securityContext:
+
+        fsGroup: 9999
+
       containers:
 
         - name: flink-main-container
@@ -115,8 +130,14 @@ spec:
             - name: OUTPUT_TOPIC
               value: "shadow-output-topic-debug-a4"
 
+
+          ports:
+
+            - containerPort: 9249
+              name: metrics
+
           # --------------------------------------------------
-          # MOUNT CHECKPOINT STORAGE
+          # MOUNT CHECKPOINT STORAGE#
           # --------------------------------------------------
 
           volumeMounts:
@@ -133,4 +154,4 @@ spec:
         - name: flink-checkpoints-volume
 
           persistentVolumeClaim:
-            claimName: flink-checkpoints-pvc
+            claimName: flink-checkpoints-pvc-debug

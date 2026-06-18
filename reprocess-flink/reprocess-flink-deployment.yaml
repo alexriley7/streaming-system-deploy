@@ -6,7 +6,7 @@ metadata:
   namespace: flink
 
 spec:
-  image: reprocess-flink-job:latest
+  image: reprocess-flink-job:5.0.0
   imagePullPolicy: Never
   flinkVersion: v1_20
   serviceAccount: flink
