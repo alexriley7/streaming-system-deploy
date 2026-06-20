@@ -2,7 +2,7 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: replay-job-a4
-  namespace: kafka
+  namespace: flink
 
 spec:
   backoffLimit: 0
@@ -16,9 +16,9 @@ spec:
       restartPolicy: Never
 
       containers:
-      - name: replay
+      - name: reprocess
 
-        image: reprocess-producer:2.0.0
+        image: reprocess-producer:3.0.0
         imagePullPolicy: Never
 
         env:
