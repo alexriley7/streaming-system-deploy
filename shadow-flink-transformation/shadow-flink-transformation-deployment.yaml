@@ -7,7 +7,7 @@ metadata:
 
 spec:
 
-  image: ghcr.io/alexriley7/streaming-system/shadow-flink-transformation:e905dd0d726d07dc5602c2fa2ab5f930cf1c80b6
+  image: ghcr.io/alexriley7/streaming-system/shadow-flink-transformation:838155c41668bbf57a84d11aed4065ab8cb5255d
 
   flinkVersion: v1_18
 
