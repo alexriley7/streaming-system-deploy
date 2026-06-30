@@ -2,16 +2,18 @@ apiVersion: flink.apache.org/v1beta1
 kind: FlinkDeployment
 
 metadata:
-  name: flink-transformation-v1
+  name: flink-transformation-v2
   namespace: flink
 
 spec:
 
-  image: ghcr.io/alexriley7/streaming-system/flink-transformation:785d9cad3db1d32ea4ab2bdb5c095bfb0f240a57
+  image: ghcr.io/alexriley7/streaming-system/flink-transformation:latest
 
   flinkVersion: v1_18
 
   serviceAccount: flink-sa
+
+
 
   # ==========================================================
   # JOB MANAGER
@@ -40,19 +42,44 @@ spec:
     taskmanager.numberOfTaskSlots: "1"
 
     # --------------------------------------------------------
+    # STATE BACKEND
+    # --------------------------------------------------------
+
+    state.backend: hashmap
+
+    # --------------------------------------------------------
     # CHECKPOINTS / SAVEPOINTS
     # --------------------------------------------------------
 
     execution.checkpointing.interval: "30s"
 
-    state.checkpoints.dir: file:///data/flink-checkpoints/checkpoints
+    state.checkpoints.dir: file:///data/flink-checkpoints/checkpoints-debug-v2x
 
-    state.savepoints.dir: file:///data/flink-checkpoints/savepoints
-
-    # OPTIONAL:
-    # keep checkpoint history
+    state.savepoints.dir: file:///data/flink-savepoints/savepoints-debug-v2x
 
     state.checkpoints.num-retained: "5"
+
+
+
+    taskmanager.numberOfTaskSlots: "1"
+
+    metrics.reporter.prom.factory.class: org.apache.flink.metrics.prometheus.PrometheusReporterFactory
+
+    metrics.reporter.prom.port: "9249"
+
+    # --------------------------------------------------------
+    # S3 / MOTO
+    # --------------------------------------------------------
+
+    s3.endpoint: http://moto-s3.default.svc.cluster.local:5000
+
+    s3.path.style.access: "true"
+
+    s3.access-key: test
+
+    s3.secret-key: test
+
+    s3.connection.ssl.enabled: "false"
 
   # ==========================================================
   # FLINK JOB
@@ -80,6 +107,11 @@ spec:
 
     spec:
 
+
+      securityContext:
+
+        fsGroup: 9999
+
       containers:
 
         - name: flink-main-container
@@ -90,16 +122,22 @@ spec:
               value: my-cluster-kafka-bootstrap.kafka.svc.cluster.local:9092
 
             - name: GROUP_ID
-              value: flink-consumer-v1
+              value: flink-debug-b1-v1
 
             - name: ENABLE_JOB
               value: "true"
 
             - name: OUTPUT_TOPIC
-              value: "output-topic-v1"
+              value: "output-topic-debug-b1"
+
+
+          ports:
+
+            - containerPort: 9249
+              name: metrics
 
           # --------------------------------------------------
-          # MOUNT CHECKPOINT STORAGE
+          # MOUNT CHECKPOINT STORAGE#
           # --------------------------------------------------
 
           volumeMounts:
@@ -116,4 +154,4 @@ spec:
         - name: flink-checkpoints-volume
 
           persistentVolumeClaim:
-            claimName: flink-checkpoints-pvc
+            claimName: flink-checkpoints-pvc-debug

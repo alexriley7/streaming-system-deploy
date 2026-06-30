@@ -122,13 +122,13 @@ spec:
               value: my-cluster-kafka-bootstrap.kafka.svc.cluster.local:9092
 
             - name: GROUP_ID
-              value: shadow-flink-debug-a4-v1
+              value: shadow-flink-debug-b1-v1
 
             - name: ENABLE_JOB
               value: "true"
 
             - name: OUTPUT_TOPIC
-              value: "shadow-output-topic-debug-a4"
+              value: "shadow-output-topic-debug-b1"
 
 
           ports:
@@ -142,8 +142,8 @@ spec:
 
           volumeMounts:
 
-            - name: flink-checkpoints-volume
-              mountPath: /data/flink-checkpoints
+            - name: shadow-flink-checkpoints-volume
+              mountPath: /data/shadow-flink-checkpoints
 
       # ------------------------------------------------------
       # PVC VOLUME
@@ -151,7 +151,7 @@ spec:
 
       volumes:
 
-        - name: flink-checkpoints-volume
+        - name: shadow-flink-checkpoints-volume
 
           persistentVolumeClaim:
-            claimName: flink-checkpoints-pvc-debug
+            claimName: shadow-flink-checkpoints-pvc-debug
