@@ -137,7 +137,7 @@ spec:
               name: metrics
 
           # --------------------------------------------------
-          # MOUNT CHECKPOINT STORAGE#
+          # MOUNT CHECKPOINT STORAGE##
           # --------------------------------------------------
 
           volumeMounts:
