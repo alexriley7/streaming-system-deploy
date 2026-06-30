@@ -2,7 +2,7 @@ apiVersion: flink.apache.org/v1beta1
 kind: FlinkDeployment
 
 metadata:
-  name: flink-transformation-v2
+  name: shadow-flink-transformation-v2
   namespace: flink
 
 spec:
