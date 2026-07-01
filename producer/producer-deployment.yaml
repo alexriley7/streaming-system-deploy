@@ -24,10 +24,10 @@ spec:
               value: my-cluster-kafka-bootstrap.kafka.svc.cluster.local:9092
 
             - name: ENABLE_PRODUCER
-              value: "false"   # switch to "false" to stop producing
+              value: "true"   # switch to "false" to stop producing
 
             - name: TOPIC
-              value: input-topic-debug-a4
+              value: input-topic-debug-b1
 
 
       imagePullSecrets:
