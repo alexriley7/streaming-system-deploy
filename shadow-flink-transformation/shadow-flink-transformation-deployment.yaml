@@ -91,7 +91,7 @@ spec:
 
     entryClass: com.example.ShadowFlinkTransformationJob
 
-    parallelism: 1
+    parallelism: 0
 
     upgradeMode: stateless
 

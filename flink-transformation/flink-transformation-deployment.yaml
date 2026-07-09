@@ -91,7 +91,7 @@ spec:
 
     entryClass: com.example.FlinkTransformationJob
 
-    parallelism: 1
+    parallelism: 0
 
     upgradeMode: stateless
 
